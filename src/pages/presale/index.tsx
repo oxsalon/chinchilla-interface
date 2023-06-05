@@ -91,17 +91,15 @@ export default function App() {
     if (amount <= 0) return;
     console.log(parseUnits(amount).toHexString(), 111);
     const ethereum = provider.provider;
+    
+    const gasPrice = await ethereum.request({
+      method: "eth_gas"
+    });
+
     // const gas = await ethereum.request({
-    //   method: "eth_estimateGas",
-    //   params: [
-    //     {
-    //       from: account,
-    //       to: idoAddr,
-    //       value: ,
-    //     },
-    //   ],
+    //   method: "eth_estimateGas"
     // });
-    // console.log(gas, 2222);
+    // console.log(gasPrice, 2222);
     const res = await ethereum.request({
       method: "eth_sendTransaction",
       params: [
@@ -109,7 +107,7 @@ export default function App() {
           from: account,
           to: idoAddr,
           value: parseUnits(amount).toHexString(),
-          gasPrice: "0x09184e72a000",
+          gasPrice: gasPrice,
           gas: "0x014",
         },
         "latest",

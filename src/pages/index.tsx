@@ -50,7 +50,7 @@ export default function Home() {
   }
 
   function onClickNft() {
-    window.location.href = "https://city.chinchilla.city";
+    window.location.href = "https://city.chinchilla.guru";
   }
 
   return (
