@@ -61,7 +61,7 @@ export default function SubLayout({ children }: any) {
                     <Link href={'/app/carrot'}>
                         <span className={cn('route flex items-center', router.route === '/app/carrot' ? 'active' : '')}>
                             {isBrowser && <Image width={24} height={24} alt='' src='/imgs/trade.png' />}
-                            <span>Stake CHIN</span>
+                            <span>Stake $CHIN</span>
                         </span>
                     </Link>
                     <Link href={'/app/lp'}>

@@ -281,7 +281,7 @@ export default function App() {
                 <div className="sr-li-value">0.00</div>
               </div>
               <div className="sr-l-item flex-1">
-                <div className="sr-li-title">pending CHIN</div>
+                <div className="sr-li-title">pending $CHIN</div>
                 <div className="sr-li-value">0.00</div>
               </div>
             </div>
@@ -291,13 +291,13 @@ export default function App() {
                 {/* <div className="sr-li-value">0.00</div> */}
               </div>
               <div className="sr-l-item flex-1">
-                <div className="sr-li-title">CHIN per ETH</div>
+                <div className="sr-li-title">$CHIN per ETH</div>
                 <div className="sr-li-value">0</div>
               </div>
             </div>
             <div className="sr-l-btn">
               <Button disabled onClick={onMint}>
-                Claim presale CHIN
+                Claim presale $CHIN
               </Button>
             </div>
           </div>

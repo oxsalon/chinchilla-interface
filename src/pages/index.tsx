@@ -325,7 +325,7 @@ export default function Home() {
             ></Image>
             <div className="d-i-title">ARB</div>
             <div className="d-i-desc">
-              $Chinchilla Token is an ERC20 standard token on the Arbitrum
+              $CHIN Token is an ERC20 standard token on the Arbitrum
               chain.
             </div>
           </div>
@@ -339,7 +339,7 @@ export default function Home() {
             ></Image>
             <div className="d-i-title">Pledge</div>
             <div className="d-i-desc">
-              Stake your $Chinchilla/LP tokens to increase your earnings and
+              Stake your $CHIN/LP tokens to increase your earnings and
               back burn.
             </div>
           </div>
@@ -353,7 +353,7 @@ export default function Home() {
             ></Image>
             <div className="d-i-title">Consume</div>
             <div className="d-i-desc">
-              $Chinchilla will be burned 0.003% per block.Guara-ntee the
+              $CHIN will be burned 0.001% per block.Guarantee the
               continued stability of tokens
             </div>
           </div>
@@ -365,9 +365,9 @@ export default function Home() {
           <div className="a-l-label">Chinchilla</div>
           <div className="a-l-title">Chinchilla</div>
           <div className="a-l-title-s">City</div>
-          <div className="a-l-desc">Earn $Chinchilla Every Day</div>
+          <div className="a-l-desc">Earn $CHIN Every Day</div>
           <div className="a-l-desc">
-            Grab some $Chinchillas and put it in the City.
+            Grab some $CHIN and put it in the City.
           </div>
           <button onClick={onClickLunch} className="a-l-btn">
             Launch APP

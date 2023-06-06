@@ -257,7 +257,7 @@ export default function Carrot() {
                     }
                 }
             `}</style>
-            <div className="c-title text-center">Stake CHIN</div>
+            <div className="c-title text-center">Stake $CHIN</div>
             <div className="c-row flex">
                 <div className="c-r-item flex-1">
                     <div className="c-left-title">APR</div>
