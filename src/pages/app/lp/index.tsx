@@ -5,7 +5,7 @@ import Button from '@/components/common/Button'
 import { isMobile } from "react-device-detect"
 import classNames from "classnames"
 import {useContract} from '@/hooks'
-import {tokenAddr, tokenAbi, zyberAddr, zyberAbi, depositAddr, depositAbi, sushiAddr, wethAddr} from '@/constants/constract'
+import {tokenAddr, tokenAbi, zyberAddr, zyberAbi, depositAddr, depositAbi, wethAddr} from '@/constants/constract'
 import { useWeb3React, Web3ReactHooks, Web3ReactProvider } from '@web3-react/core'
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import { supportChain } from "@/constants"
@@ -28,7 +28,6 @@ export default function Lp() {
     const chefContract: any = useContract(depositAddr, depositAbi);
     const chiContract: any = useContract(tokenAddr, tokenAbi);
     const zbContract: any = useContract(zyberAddr, zyberAbi);
-    const sushiContract: any = useContract(sushiAddr, zyberAbi);
 
     const fetchData = async () => {
         let staked = await zbContract.callStatic.balanceOf(depositAddr);
