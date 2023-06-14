@@ -30,6 +30,7 @@ export default function App() {
   const [alertText, setAlertText]: any = useState("");
   const [amount, setAmount]: any = useState("");
   const [ethBalance, setEthBalance] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openTip = (options: any) => {
     setOpenSnackbar(true);
@@ -47,6 +48,8 @@ export default function App() {
         params: [account, "latest"],
       });
       setEthBalance(res);
+      setIsOpen(await nftContract.callStatic.isOpen());
+
     };
 
     getData();
@@ -91,7 +94,7 @@ export default function App() {
     if (amount <= 0) return;
     
     const price = await nftContract.callStatic.tokenPrice();
-    console.log(String(price * amount), 111111)
+    console.log(formatUnits(price), 111111)
     
     nftContract.buyTokens(amount, account, {from: account, gasLimit: '990000', value: String(amount * price)}).then((res: any) => {
       openTip({
@@ -278,8 +281,8 @@ export default function App() {
             </div>
             <div className="sr-l-row text-center flex">
               <div className="sr-l-item flex-1">
-                <div className="sr-li-title">opens in</div>
-                {/* <div className="sr-li-value">0.00</div> */}
+                <div className="sr-li-title">{isOpen ? 'opens in' : 'opens off'}</div>
+                
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">$CHIN per ETH</div>
