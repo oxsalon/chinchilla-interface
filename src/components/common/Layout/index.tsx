@@ -10,7 +10,6 @@ export default function Layout({ children }: any) {
     const { account, chainId } = useWeb3React();
 
     useEffect(() => {
-        console.log(account, 1111);
         if(supportChain !== chainId || !account) {
             router.push('/');
         }

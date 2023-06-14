@@ -89,32 +89,23 @@ export default function App() {
 
   async function onContribute() {
     if (amount <= 0) return;
-    console.log(parseUnits(amount).toHexString(), 111);
-    const ethereum = provider.provider;
     
-    const gasPrice = await ethereum.request({
-      method: "eth_gas"
+    const price = await nftContract.callStatic.tokenPrice();
+    console.log(String(price * amount), 111111)
+    
+    nftContract.buyTokens(amount, account, {from: account, gasLimit: '990000', value: String(amount * price)}).then((res: any) => {
+      openTip({
+        type: "success",
+        text: "The transaction has been sent on the chain",
+      });
+    })
+    .catch((err: any) => {
+      console.error(err)
+      openTip({
+        type: "error",
+        text: "error transaction",
+      });
     });
-
-    // const gas = await ethereum.request({
-    //   method: "eth_estimateGas"
-    // });
-    // console.log(gasPrice, 2222);
-    const res = await ethereum.request({
-      method: "eth_sendTransaction",
-      params: [
-        {
-          from: account,
-          to: idoAddr,
-          value: parseUnits(amount).toHexString(),
-          gasPrice: gasPrice,
-          gas: "0x014",
-        },
-        "latest",
-      ],
-    });
-
-    console.log(res, 1111);
   }
 
   return (

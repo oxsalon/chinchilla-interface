@@ -5,7 +5,7 @@ const testNet = {
     sushiAddr: '0x232D0d0b34483E4487F9C4b0fe4A0193E9529568', //sushi
     wethAddr: '0x7CF31096E83546782802f094355f804F7dbE0752', //weth
     nftToken: '0x7A17A21eB8FfD6df5AEE7b554E61063Dc1545b90', //nft
-    idoAddr: '0xa585c72e18f7b98f354dac070f440ae8294f658f', //ido
+    idoAddr: '0x2248Fa253A6240D7772e14593f1fED2f7732A045', //ido
 }
 
 const mainNet = {
@@ -15,7 +15,7 @@ const mainNet = {
     sushiAddr: '0x905dfCD5649217c42684f23958568e533C711Aa3', //sushi
     wethAddr: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1', //weth
     nftToken: '0x7A17A21eB8FfD6df5AEE7b554E61063Dc1545b90', //nft
-    idoAddr: '0xa585c72e18f7b98f354dac070f440ae8294f658f', //ido
+    idoAddr: '0x2248Fa253A6240D7772e14593f1fED2f7732A045', //ido
 }
 
 let addr = testNet;
@@ -55,8 +55,6 @@ export const zyberAbi = [
     "function balanceOf(address) view returns (uint)",
 ];
 
-export const idoAbi = [
-    "function claim(address, uint256, address, uint256, AllowlistProof, calldata, bytes) view returns (uint256)"
-]
+export const idoAbi = [{"inputs":[{"internalType":"address","name":"_tokenAddress","type":"address"},{"internalType":"uint256","name":"_tokenPrice","type":"uint256"},{"internalType":"uint256","name":"_totalTokenSupply","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"referrer","type":"address"},{"indexed":true,"internalType":"address","name":"referee","type":"address"}],"name":"Referral","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"purchaser","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokenPurchase","type":"event"},{"inputs":[],"name":"REFERRAL_BONUS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_tokenAmount","type":"uint256"},{"internalType":"address","name":"_referrer","type":"address"}],"name":"buyTokens","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"close","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"getReferralStatus","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"isOpen","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"open","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_newPrice","type":"uint256"}],"name":"setTokenPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_newTotalTokenSupply","type":"uint256"}],"name":"setTotalTokenSupply","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokenPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokensSold","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalTokenSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawUnsoldTokens","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 
 export const {tokenAddr, depositAddr, zyberAddr, sushiAddr, wethAddr, nftToken, idoAddr} = addr;
