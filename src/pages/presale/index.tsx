@@ -94,9 +94,10 @@ export default function App() {
     if (amount <= 0) return;
     
     const price = await nftContract.callStatic.tokenPrice();
-    console.log(formatUnits(price), 111111)
+    const tokenAmount = parseUnits(amount).div(price).toString();
+    console.log(formatUnits(price), parseUnits(amount).div(price).toString(), 111111)
     
-    nftContract.buyTokens(amount, account, {from: account, gasLimit: '990000', value: String(amount * price)}).then((res: any) => {
+    nftContract.buyTokens(parseUnits(tokenAmount), account, {from: account, gasLimit: '990000', value: parseUnits(amount)}).then((res: any) => {
       openTip({
         type: "success",
         text: "The transaction has been sent on the chain",
