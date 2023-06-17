@@ -35,6 +35,7 @@ export default function App() {
   const [balance, setBalance]: any = useState(0);
   const [totalToken, setTotalToken]: any = useState(0);
   const [idoBalance, setIdoBalance]: any = useState(0);
+  const [tokenPrice, setTokenPrice]: any = useState(0);
 
   const openTip = (options: any) => {
     setOpenSnackbar(true);
@@ -53,10 +54,12 @@ export default function App() {
       });
       setEthBalance(res);
       setIsOpen(await nftContract.callStatic.isOpen());
-
+      
       const idoBalance = await provider.getBalance(idoAddr);
+      const price = await nftContract.callStatic.tokenPrice();
+      console.log(formatUnits(price), 111)
       setIdoBalance(formatUnits(idoBalance))
-
+      setTokenPrice(formatUnits(price));
       const balance = await chiContract.callStatic.balanceOf(account);
       const totalTokenAmount = await chiContract.callStatic.balanceOf(idoAddr);
       setBalance(formatUnits(balance));
@@ -283,7 +286,7 @@ export default function App() {
             <div className="sr-l-row text-center flex">
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">total ETH raised</div>
-                <div className="sr-li-value">{Number(idoBalance).toFixed(2)}</div>
+                <div className="sr-li-value">{Number(idoBalance).toFixed(5)}</div>
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">pending $CHIN</div>
@@ -297,7 +300,7 @@ export default function App() {
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">$CHIN per ETH</div>
-                <div className="sr-li-value">{Number(balance).toFixed(2)}</div>
+                <div className="sr-li-value">{Number(tokenPrice).toFixed(8)}</div>
               </div>
             </div>
             <div className="sr-l-btn">
@@ -310,7 +313,7 @@ export default function App() {
             <div className="sr-r-title">Contribute ETH</div>
             <div className="flex sr-input-tip flex justify-between">
               <div>Balance</div>
-              <div>{parseFloat(formatUnits(ethBalance)).toFixed(2)}ETH</div>
+              <div>{Number(formatUnits(ethBalance)).toFixed(4)}ETH</div>
             </div>
             <div className="sr-input-box flex items-center">
               <Image
@@ -330,7 +333,7 @@ export default function App() {
               </div>
             </div>
             <div className="sr-link flex justify-center">
-              <div>Bridge ETH</div>
+              <div className="cursor-pointer" onClick={() => window.open('https://bridge.arbitrum.io/')}>Bridge ETH</div>
               <Image
                 className="sm-img"
                 width={24}
