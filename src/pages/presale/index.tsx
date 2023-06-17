@@ -4,7 +4,7 @@ import { ReactElement, useState, useEffect } from "react";
 import Button from "@/components/common/Button";
 import { isMobile, isBrowser } from "react-device-detect";
 import { useContract } from "@/hooks";
-import { nftToken, nftAbi, idoAddr, idoAbi } from "@/constants/constract";
+import { nftToken, nftAbi, idoAddr, idoAbi, tokenAddr, tokenAbi } from "@/constants/constract";
 import { formatUnits, parseUnits } from "@ethersproject/units";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -24,6 +24,7 @@ const root = merkleTree.getRoot();
 
 export default function App() {
   const nftContract: any = useContract(idoAddr, idoAbi);
+  const chiContract: any = useContract(tokenAddr, tokenAbi);
   const { account, provider, chainId }: any = useWeb3React();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertType, setAlertType]: any = useState("");
@@ -31,6 +32,9 @@ export default function App() {
   const [amount, setAmount]: any = useState("");
   const [ethBalance, setEthBalance] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [balance, setBalance]: any = useState(0);
+  const [totalToken, setTotalToken]: any = useState(0);
+  const [idoBalance, setIdoBalance]: any = useState(0);
 
   const openTip = (options: any) => {
     setOpenSnackbar(true);
@@ -50,6 +54,13 @@ export default function App() {
       setEthBalance(res);
       setIsOpen(await nftContract.callStatic.isOpen());
 
+      const idoBalance = await provider.getBalance(idoAddr);
+      setIdoBalance(formatUnits(idoBalance))
+
+      const balance = await chiContract.callStatic.balanceOf(account);
+      const totalTokenAmount = await chiContract.callStatic.balanceOf(idoAddr);
+      setBalance(formatUnits(balance));
+      setTotalToken(formatUnits(totalTokenAmount));
     };
 
     getData();
@@ -95,7 +106,6 @@ export default function App() {
     
     const price = await nftContract.callStatic.tokenPrice();
     const tokenAmount = parseUnits(amount).div(price).toString();
-    console.log(formatUnits(price), parseUnits(amount).div(price).toString(), 111111)
     
     nftContract.buyTokens(parseUnits(tokenAmount), account, {from: account, gasLimit: '990000', value: parseUnits(amount)}).then((res: any) => {
       openTip({
@@ -273,11 +283,11 @@ export default function App() {
             <div className="sr-l-row text-center flex">
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">total ETH raised</div>
-                <div className="sr-li-value">0.00</div>
+                <div className="sr-li-value">{Number(idoBalance).toFixed(2)}</div>
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">pending $CHIN</div>
-                <div className="sr-li-value">0.00</div>
+                <div className="sr-li-value">{Number(totalToken).toFixed(2)}</div>
               </div>
             </div>
             <div className="sr-l-row text-center flex">
@@ -287,7 +297,7 @@ export default function App() {
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">$CHIN per ETH</div>
-                <div className="sr-li-value">0</div>
+                <div className="sr-li-value">{Number(balance).toFixed(2)}</div>
               </div>
             </div>
             <div className="sr-l-btn">
