@@ -30,7 +30,7 @@ export default function App() {
   const [alertType, setAlertType]: any = useState("");
   const [alertText, setAlertText]: any = useState("");
   const [amount, setAmount]: any = useState("");
-  const [ethBalance, setEthBalance] = useState(0);
+  const [ethBalance, setEthBalance]: any = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [balance, setBalance]: any = useState(0);
   const [totalToken, setTotalToken]: any = useState(0);
@@ -101,7 +101,7 @@ export default function App() {
   }
 
   function onClickMax() {
-    setAmount(parseFloat(formatUnits(ethBalance)).toFixed(2));
+    setAmount(Number(formatUnits(ethBalance)) - 0.001);
   }
 
   async function onContribute() {
