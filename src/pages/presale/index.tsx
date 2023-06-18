@@ -57,7 +57,7 @@ export default function App() {
       
       const idoBalance = await provider.getBalance(idoAddr);
       const price = await nftContract.callStatic.tokenPrice();
-      console.log(formatUnits(price), 111)
+      console.log(isOpen, 111)
       setIdoBalance(formatUnits(idoBalance))
       setTokenPrice(formatUnits(price));
       const balance = await chiContract.callStatic.balanceOf(account);
@@ -101,16 +101,16 @@ export default function App() {
   }
 
   function onClickMax() {
-    setAmount(Number(formatUnits(ethBalance)) - 0.001);
+    setAmount(Number(formatUnits(ethBalance)) - 0.003);
   }
 
   async function onContribute() {
     if (amount <= 0) return;
     
     const price = await nftContract.callStatic.tokenPrice();
-    const tokenAmount = parseUnits(amount).div(price).toString();
+    const tokenAmount = parseUnits(String(amount)).div(price).toString();
     
-    nftContract.buyTokens(parseUnits(tokenAmount), account, {from: account, gasLimit: '990000', value: parseUnits(amount)}).then((res: any) => {
+    nftContract.buyTokens(parseUnits(tokenAmount), account, {from: account, gasLimit: '990000', value: parseUnits(String(amount))}).then((res: any) => {
       openTip({
         type: "success",
         text: "The transaction has been sent on the chain",
@@ -271,7 +271,7 @@ export default function App() {
           }
         }
       `}</style>
-
+  
       <Image
         className="sm-img"
         width={320}
@@ -295,8 +295,8 @@ export default function App() {
             </div>
             <div className="sr-l-row text-center flex">
               <div className="sr-l-item flex-1">
-                <div className="sr-li-title">{isOpen ? 'opens in' : 'opens off'}</div>
-                
+                <div className="sr-li-title">opens in</div>
+                <div className="sr-li-value">June 22 14:00 UTC</div>
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">$CHIN per ETH</div>
@@ -304,7 +304,7 @@ export default function App() {
               </div>
             </div>
             <div className="sr-l-btn">
-              <Button disabled onClick={onMint}>
+              <Button disabled={!isOpen} onClick={onMint}>
                 Claim presale $CHIN
               </Button>
             </div>
