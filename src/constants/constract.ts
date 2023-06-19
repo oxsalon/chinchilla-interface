@@ -9,13 +9,13 @@ const testNet = {
 }
 
 const mainNet = {
-    tokenAddr: '0x8418B8BFF5a9979e26091922bF8614b78e93c44B', //web3
+    tokenAddr: '0xf7cFa236259B38d9646d541154CacD361C4C6CC5', //web3
     depositAddr: '0x93Db787b4376586d9a4Bd27F01a6B3cDd418c2FE', //chef
     zyberAddr: '0x5bcb14eeb3739a2140ea23535c96394597c85e82', //pairweth
     sushiAddr: '0x905dfCD5649217c42684f23958568e533C711Aa3', //sushi
     wethAddr: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1', //weth
     nftToken: '0x7A17A21eB8FfD6df5AEE7b554E61063Dc1545b90', //nft
-    idoAddr: '0x2248Fa253A6240D7772e14593f1fED2f7732A045', //ido
+    idoAddr: '0x7490CDC9ead8A68508266CDD8A763589e27C2F38', //ido
 }
 
 let addr = testNet;
