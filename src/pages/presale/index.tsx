@@ -87,7 +87,8 @@ export default function App() {
   }
 
   function onClickMax() {
-    setAmount(parseFloat(formatUnits(ethBalance)).toFixed(2));
+    const balance: any = parseInt(String(Number(formatUnits(ethBalance)) * (10 ** 6))) / (10 ** 6);
+    setAmount(balance);
   }
 
   async function onContribute() {
