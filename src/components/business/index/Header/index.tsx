@@ -32,6 +32,14 @@ export default function Header() {
             console.debug('Failed to connect to metamask')
         })
     }
+
+    function goPresale() {
+        if (account && chainId === supportChain) {
+            router.push("/presale");
+        } else {
+            alert('Please connect wallet');
+        }
+    }
     return (
         <div className='flex items-center header'>
             <style jsx>{`
@@ -102,12 +110,12 @@ export default function Header() {
                         <span className='ri-text'>Buy</span>
                     </span>
                 </Link>
-                <Link className={cn('text-white', isMobile ? 'mr-4' : 'mr-20')} href={'/presale'}>
+                <a onClick={goPresale} className={cn('text-white', isMobile ? 'mr-4' : 'mr-20')} href="javascript:void(0);">
                     <span className={cn('router-item flex items-center justify-center', router.route.includes('/presale') ? 'actice' : '')}>
                         {isBrowser && <Image width={24} height={24} alt='' src='/imgs/header-icon2.png' />}
                         <span className='ri-text'>Presale</span>
                     </span>
-                </Link>
+                </a>
                 {
                     (account && chainId === supportChain) ? 
                     (<div className='cursor-pointer connect-btn box-border items-center justify-center flex font-bold'>{ shopAddr(account) }</div>) 

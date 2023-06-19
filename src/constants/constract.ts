@@ -1,5 +1,5 @@
 const testNet = {
-    tokenAddr: '0x7CF31096E83546782802f094355f804F7dbE0752', //web3
+    tokenAddr: '0x427f850B3551700892295A6440150c7752E541ea', //web3
     depositAddr: '0x97129f27717348fb304e6557f4e1c290fc8992b8', //chef
     zyberAddr: '0x232D0d0b34483E4487F9C4b0fe4A0193E9529568', //pairweth
     sushiAddr: '0x232D0d0b34483E4487F9C4b0fe4A0193E9529568', //sushi

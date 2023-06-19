@@ -4,7 +4,7 @@ import { ReactElement, useState, useEffect } from "react";
 import Button from "@/components/common/Button";
 import { isMobile, isBrowser } from "react-device-detect";
 import { useContract } from "@/hooks";
-import { nftToken, nftAbi, idoAddr, idoAbi } from "@/constants/constract";
+import { nftToken, nftAbi, idoAddr, idoAbi, tokenAddr, tokenAbi } from "@/constants/constract";
 import { formatUnits, parseUnits } from "@ethersproject/units";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -24,13 +24,18 @@ const root = merkleTree.getRoot();
 
 export default function App() {
   const nftContract: any = useContract(idoAddr, idoAbi);
+  const chiContract: any = useContract(tokenAddr, tokenAbi);
   const { account, provider, chainId }: any = useWeb3React();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alertType, setAlertType]: any = useState("");
   const [alertText, setAlertText]: any = useState("");
   const [amount, setAmount]: any = useState("");
-  const [ethBalance, setEthBalance] = useState(0);
+  const [ethBalance, setEthBalance]: any = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [balance, setBalance]: any = useState(0);
+  const [totalToken, setTotalToken]: any = useState(0);
+  const [idoBalance, setIdoBalance]: any = useState(0);
+  const [tokenPrice, setTokenPrice]: any = useState(0);
 
   const openTip = (options: any) => {
     setOpenSnackbar(true);
@@ -49,7 +54,16 @@ export default function App() {
       });
       setEthBalance(res);
       setIsOpen(await nftContract.callStatic.isOpen());
-
+      
+      const idoBalance = await provider.getBalance(idoAddr);
+      const price = await nftContract.callStatic.tokenPrice();
+      console.log(isOpen, 111)
+      setIdoBalance(formatUnits(idoBalance))
+      setTokenPrice(formatUnits(price));
+      const balance = await chiContract.callStatic.balanceOf(account);
+      const totalTokenAmount = await chiContract.callStatic.balanceOf(idoAddr);
+      setBalance(formatUnits(balance));
+      setTotalToken(formatUnits(totalTokenAmount));
     };
 
     getData();
@@ -95,9 +109,9 @@ export default function App() {
     if (amount <= 0) return;
     
     const price = await nftContract.callStatic.tokenPrice();
-    console.log(formatUnits(price), 111111)
+    const tokenAmount = parseUnits(String(amount)).div(price).toString();
     
-    nftContract.buyTokens(amount, account, {from: account, gasLimit: '990000', value: String(amount * price)}).then((res: any) => {
+    nftContract.buyTokens(parseUnits(tokenAmount), account, {from: account, gasLimit: '990000', value: parseUnits(String(amount))}).then((res: any) => {
       openTip({
         type: "success",
         text: "The transaction has been sent on the chain",
@@ -258,7 +272,7 @@ export default function App() {
           }
         }
       `}</style>
-
+  
       <Image
         className="sm-img"
         width={320}
@@ -273,25 +287,25 @@ export default function App() {
             <div className="sr-l-row text-center flex">
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">total ETH raised</div>
-                <div className="sr-li-value">0.00</div>
+                <div className="sr-li-value">{Number(idoBalance).toFixed(5)}</div>
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">pending $CHIN</div>
-                <div className="sr-li-value">0.00</div>
+                <div className="sr-li-value">{Number(totalToken).toFixed(2)}</div>
               </div>
             </div>
             <div className="sr-l-row text-center flex">
               <div className="sr-l-item flex-1">
-                <div className="sr-li-title">{isOpen ? 'opens in' : 'opens off'}</div>
-                
+                <div className="sr-li-title">opens in</div>
+                <div className="sr-li-value">June 22 14:00 UTC</div>
               </div>
               <div className="sr-l-item flex-1">
                 <div className="sr-li-title">$CHIN per ETH</div>
-                <div className="sr-li-value">0</div>
+                <div className="sr-li-value">{Number(tokenPrice).toFixed(8)}</div>
               </div>
             </div>
             <div className="sr-l-btn">
-              <Button disabled onClick={onMint}>
+              <Button disabled={!isOpen} onClick={onMint}>
                 Claim presale $CHIN
               </Button>
             </div>
@@ -300,7 +314,7 @@ export default function App() {
             <div className="sr-r-title">Contribute ETH</div>
             <div className="flex sr-input-tip flex justify-between">
               <div>Balance</div>
-              <div>{parseFloat(formatUnits(ethBalance)).toFixed(2)}ETH</div>
+              <div>{Number(formatUnits(ethBalance)).toFixed(4)}ETH</div>
             </div>
             <div className="sr-input-box flex items-center">
               <Image
@@ -320,7 +334,7 @@ export default function App() {
               </div>
             </div>
             <div className="sr-link flex justify-center">
-              <div>Bridge ETH</div>
+              <div className="cursor-pointer" onClick={() => window.open('https://bridge.arbitrum.io/')}>Bridge ETH</div>
               <Image
                 className="sm-img"
                 width={24}
